@@ -2,7 +2,6 @@
 
 namespace SLLH\StyleCIBridge;
 
-use SLLH\StyleCIBridge\Exception\LevelConfigException;
 use SLLH\StyleCIBridge\StyleCI\Configuration;
 use SLLH\StyleCIBridge\StyleCI\Fixers;
 use Symfony\Component\Config\Definition\Processor;
@@ -131,28 +130,6 @@ final class ConfigBridge
         }
 
         return $finder;
-    }
-
-    /**
-     * @return int
-     *
-     * @deprecated since 1.1, to be removed in 2.0
-     */
-    public function getLevel()
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1 and will be removed in 2.0.', E_USER_DEPRECATED);
-
-        $preset = $this->styleCIConfig['preset'];
-        $validPresets = array(
-            'psr1'    => FixerInterface::PSR1_LEVEL,
-            'psr2'    => FixerInterface::PSR1_LEVEL,
-            'symfony' => FixerInterface::SYMFONY_LEVEL,
-        );
-        if (!in_array($preset, array_keys($validPresets))) {
-            throw new LevelConfigException(sprintf('Invalid preset "%s". Must be one of "%s".', $preset, implode('", "', array_keys($validPresets))));
-        }
-
-        return $validPresets[$preset];
     }
 
     /**
